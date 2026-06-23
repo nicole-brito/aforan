@@ -607,7 +607,7 @@ function ExplorarTab({ events, user }: { events: EventCard[]; user: UserProfile 
               </p>
             ) : (
               featuredClubs.map(club => (
-                <Link key={club.id} to="/clube/$id" params={{ id: club.id }} style={{ textDecoration: "none" }}>
+                <Link key={club.id} to="/c/$handle" params={{ handle: club.id }} style={{ textDecoration: "none" }}>
                   <div style={{
                     display: "flex", gap: 12, alignItems: "center",
                     padding: "12px 0",
@@ -948,10 +948,7 @@ function HomePage() {
       {tab === "ingressos" && <IngressosTab userId={uid!} />}
       {tab === "perfil" && <PerfilTab user={user} onSignOut={signOut} />}
 
-      <BottomNav tab={tab} onChange={(t) => {
-        if (t === "perfil" && uid) { navigate({ to: "/perfil/$id", params: { id: uid } }); return; }
-        setTab(t);
-      }} />
+      <BottomNav tab={tab} onChange={setTab} />
     </div>
   );
 }

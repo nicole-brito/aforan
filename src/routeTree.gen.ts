@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PerfilIdRouteImport } from './routes/perfil.$id'
@@ -16,7 +17,13 @@ import { Route as EventoNovoRouteImport } from './routes/evento.novo'
 import { Route as EventoIdRouteImport } from './routes/evento.$id'
 import { Route as ClubeNovoRouteImport } from './routes/clube.novo'
 import { Route as ClubeIdRouteImport } from './routes/clube.$id'
+import { Route as CHandleRouteImport } from './routes/c.$handle'
 
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
@@ -52,10 +59,17 @@ const ClubeIdRoute = ClubeIdRouteImport.update({
   path: '/clube/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CHandleRoute = CHandleRouteImport.update({
+  id: '/c/$handle',
+  path: '/c/$handle',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/onboarding': typeof OnboardingRoute
+  '/c/$handle': typeof CHandleRoute
   '/clube/$id': typeof ClubeIdRoute
   '/clube/novo': typeof ClubeNovoRoute
   '/evento/$id': typeof EventoIdRoute
@@ -65,6 +79,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/onboarding': typeof OnboardingRoute
+  '/c/$handle': typeof CHandleRoute
   '/clube/$id': typeof ClubeIdRoute
   '/clube/novo': typeof ClubeNovoRoute
   '/evento/$id': typeof EventoIdRoute
@@ -75,6 +91,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/onboarding': typeof OnboardingRoute
+  '/c/$handle': typeof CHandleRoute
   '/clube/$id': typeof ClubeIdRoute
   '/clube/novo': typeof ClubeNovoRoute
   '/evento/$id': typeof EventoIdRoute
@@ -86,6 +104,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/home'
+    | '/onboarding'
+    | '/c/$handle'
     | '/clube/$id'
     | '/clube/novo'
     | '/evento/$id'
@@ -95,6 +115,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/home'
+    | '/onboarding'
+    | '/c/$handle'
     | '/clube/$id'
     | '/clube/novo'
     | '/evento/$id'
@@ -104,6 +126,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/home'
+    | '/onboarding'
+    | '/c/$handle'
     | '/clube/$id'
     | '/clube/novo'
     | '/evento/$id'
@@ -114,6 +138,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HomeRoute: typeof HomeRoute
+  OnboardingRoute: typeof OnboardingRoute
+  CHandleRoute: typeof CHandleRoute
   ClubeIdRoute: typeof ClubeIdRoute
   ClubeNovoRoute: typeof ClubeNovoRoute
   EventoIdRoute: typeof EventoIdRoute
@@ -123,6 +149,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/home': {
       id: '/home'
       path: '/home'
@@ -172,12 +205,21 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClubeIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/c/$handle': {
+      id: '/c/$handle'
+      path: '/c/$handle'
+      fullPath: '/c/$handle'
+      preLoaderRoute: typeof CHandleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HomeRoute: HomeRoute,
+  OnboardingRoute: OnboardingRoute,
+  CHandleRoute: CHandleRoute,
   ClubeIdRoute: ClubeIdRoute,
   ClubeNovoRoute: ClubeNovoRoute,
   EventoIdRoute: EventoIdRoute,
